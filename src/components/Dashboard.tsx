@@ -232,9 +232,7 @@ const Dashboard: React.FC<DashboardProps> = ({ tasks, studyPlans, dailyAvailable
         </div>
       </div>
 
-      <EnvironmentCard />
-
-          {useMemo(() => {
+           {useMemo(() => {
         const totalAllEstimatedHours = tasks.reduce((sum, task) => sum + task.estimatedHours, 0);
         
         const taskCompletionRate = tasks.length > 0 ? Math.round((completedTasks.length / tasks.length) * 100) : 0;
@@ -337,6 +335,9 @@ const Dashboard: React.FC<DashboardProps> = ({ tasks, studyPlans, dailyAvailable
 
       {/* Habits Card - placed under motivational quotes */}
       <HabitTracker habits={habits} onAddHabit={onAddHabit} onToggleHabitToday={onToggleHabitToday} onDeleteHabit={onDeleteHabit} />
+
+      {/* Your Environment - moved below Habits */}
+      <EnvironmentCard />
 
       {/* Progress Overview and Today's Sessions - Side by Side */}
       <div className="flex flex-col lg:flex-row gap-6 mb-6">
