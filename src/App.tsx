@@ -692,7 +692,7 @@ function App() {
     };
 
     const computeWeeklyStreak = (history: string[], targetPerWeek: number = 1, todayStr: string) => {
-        // Count consecutive weeks (ending this week) meeting target
+        // Streak counts consecutive weeks meeting target. Do not reset mid-week; only weeks matter.
         const byWeek = new Map<string, number>();
         history.forEach(d => {
             const date = new Date(d);
@@ -701,21 +701,29 @@ function App() {
             const key = startOfWeek.toISOString().split('T')[0];
             byWeek.set(key, (byWeek.get(key) || 0) + 1);
         });
-        let streak = 0;
         const now = new Date(todayStr);
-        const weekStart = new Date(now);
-        weekStart.setDate(now.getDate() - now.getDay());
+        const currentWeekStart = new Date(now);
+        currentWeekStart.setDate(now.getDate() - now.getDay());
+        const currentWeekKey = currentWeekStart.toISOString().split('T')[0];
+        const currentWeekCount = byWeek.get(currentWeekKey) || 0;
+
+        // Count consecutive successful weeks BEFORE the current week
+        let prevStreak = 0;
+        const weekIter = new Date(currentWeekStart);
+        weekIter.setDate(weekIter.getDate() - 7); // start from last week
         while (true) {
-            const key = weekStart.toISOString().split('T')[0];
+            const key = weekIter.toISOString().split('T')[0];
             const count = byWeek.get(key) || 0;
             if (count >= targetPerWeek) {
-                streak += 1;
-                weekStart.setDate(weekStart.getDate() - 7);
+                prevStreak += 1;
+                weekIter.setDate(weekIter.getDate() - 7);
             } else {
                 break;
             }
         }
-        return streak;
+
+        // Include current week only if target already met; otherwise keep previous streak
+        return currentWeekCount >= targetPerWeek ? prevStreak + 1 : prevStreak;
     };
 
     const handleAddHabit = (input: { title: string; cadence: 'daily' | 'weekly'; targetPerWeek?: number; reminder?: boolean }) => {
