@@ -335,6 +335,9 @@ const Dashboard: React.FC<DashboardProps> = ({ tasks, studyPlans, dailyAvailable
         );
       }, [Math.floor((tasks.length > 0 ? (completedTasks.length / tasks.length) * 100 : 0) / 10), completedTasks.length])}
 
+      {/* Habits Card - placed under motivational quotes */}
+      <HabitTracker habits={habits} onAddHabit={onAddHabit} onToggleHabitToday={onToggleHabitToday} onDeleteHabit={onDeleteHabit} />
+
       {/* Progress Overview and Today's Sessions - Side by Side */}
       <div className="flex flex-col lg:flex-row gap-6 mb-6">
         {/* Progress Overview - Left Side */}
@@ -836,8 +839,6 @@ const Dashboard: React.FC<DashboardProps> = ({ tasks, studyPlans, dailyAvailable
       </div>
 
       {/* Move session analytics, recent activities, and table into a compact grid at the bottom */}
-      {/* Habits Card */}
-      <HabitTracker habits={habits} onAddHabit={onAddHabit} onToggleHabitToday={onToggleHabitToday} onDeleteHabit={onDeleteHabit} />
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
         {/* Session Analytics Card - Bottom */}
