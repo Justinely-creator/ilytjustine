@@ -27,21 +27,27 @@ const computeWeeklyStreak = (history: string[], targetPerWeek: number = 1, today
     const key = startOfWeek.toISOString().split('T')[0];
     byWeek.set(key, (byWeek.get(key) || 0) + 1);
   });
-  let streak = 0;
   const now = new Date(todayStr);
-  const weekStart = new Date(now);
-  weekStart.setDate(now.getDate() - now.getDay());
+  const currentWeekStart = new Date(now);
+  currentWeekStart.setDate(now.getDate() - now.getDay());
+  const currentWeekKey = currentWeekStart.toISOString().split('T')[0];
+  const currentWeekCount = byWeek.get(currentWeekKey) || 0;
+
+  let prevStreak = 0;
+  const weekIter = new Date(currentWeekStart);
+  weekIter.setDate(weekIter.getDate() - 7);
   while (true) {
-    const key = weekStart.toISOString().split('T')[0];
+    const key = weekIter.toISOString().split('T')[0];
     const count = byWeek.get(key) || 0;
     if (count >= targetPerWeek) {
-      streak += 1;
-      weekStart.setDate(weekStart.getDate() - 7);
+      prevStreak += 1;
+      weekIter.setDate(weekIter.getDate() - 7);
     } else {
       break;
     }
   }
-  return streak;
+
+  return currentWeekCount >= targetPerWeek ? prevStreak + 1 : prevStreak;
 };
 
 interface HabitTrackerProps {
