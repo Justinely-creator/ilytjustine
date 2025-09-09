@@ -2519,6 +2519,23 @@ function App() {
                             </div>
                             <div className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-violet-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent drop-shadow-sm">TimePilot</div>
                         </div>
+                        <div className="hidden lg:flex flex-1 items-center justify-center">
+                            <div className="flex items-center bg-gradient-to-r from-blue-100/80 via-indigo-100/80 to-purple-100/80 dark:from-gray-800/80 dark:via-blue-900/40 dark:to-indigo-900/40 rounded-2xl p-1.5 shadow-inner border border-blue-200/50 dark:border-blue-800/50">
+                                {tabs.map((tab) => (
+                                    <button
+                                        key={tab.id}
+                                        onClick={() => { setActiveTab(tab.id as typeof activeTab); setMobileMenuOpen(false); }}
+                                        className={`flex items-center justify-center px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 relative group ${activeTab === tab.id ? 'bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500 text-white shadow-lg shadow-blue-500/30' : 'text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-white/80 dark:hover:bg-gray-700/60'} ${showInteractiveTutorial && highlightedTab === tab.id ? 'ring-2 ring-yellow-400 animate-pulse' : ''}`}
+                                        title={tab.label}
+                                    >
+                                        <tab.icon size={18} className={activeTab === tab.id ? 'drop-shadow-sm' : 'group-hover:scale-110 transition-transform'} />
+                                        {activeTab === tab.id && (
+                                            <span className="ml-2.5 hidden xl:inline drop-shadow-sm">{tab.label}</span>
+                                        )}
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
                         <div className="flex items-center space-x-2 sm:space-x-3 md:space-x-4">
                             <button
                                 className={`flex items-center rounded-xl sm:rounded-2xl p-2 sm:p-3 backdrop-blur-lg transition-all duration-300 z-50 border-2 ${
@@ -2581,7 +2598,7 @@ function App() {
                 <nav className="sticky-nav backdrop-blur-xl bg-gradient-to-r from-white/90 via-blue-50/85 to-indigo-50/85 dark:from-gray-900/95 dark:via-blue-900/25 dark:to-indigo-900/25 shadow-2xl shadow-blue-500/8 dark:shadow-blue-900/15 border-b border-gradient-to-r from-blue-200/15 via-indigo-200/15 to-purple-200/15 dark:from-blue-800/15 dark:via-indigo-800/15 dark:to-purple-800/15">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         {/* Desktop Navigation */}
-                        <div className="hidden lg:flex items-center justify-start space-x-1 py-2">
+                        <div className="hidden">
                             <div className="flex items-center bg-gradient-to-r from-blue-100/80 via-indigo-100/80 to-purple-100/80 dark:from-gray-800/80 dark:via-blue-900/40 dark:to-indigo-900/40 rounded-2xl p-1 shadow-inner border border-blue-200/50 dark:border-blue-800/50">
                                 {tabs.map((tab) => (
                                     <button
