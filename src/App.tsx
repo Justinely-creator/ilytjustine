@@ -1022,11 +1022,24 @@ function App() {
     };
 
     const computeRecurringDeletedFromOneTimes = (rec: FixedCommitment, existing: FixedCommitment[]) => {
-        const del = new Set<string>(rec.deletedOccurrences || []);
+        // Determine all dates where this recurring commitment WOULD apply (ignoring current deletions)
+        const wouldApply = (date: string) => {
+            if (!rec.recurring) return false;
+            const dowMatch = rec.daysOfWeek.includes(new Date(date).getDay());
+            if (!dowMatch) return false;
+            if (rec.dateRange?.startDate && rec.dateRange?.endDate) {
+                const end = new Date(rec.dateRange.endDate);
+                end.setDate(end.getDate() + 1);
+                const incEnd = end.toISOString().split('T')[0];
+                return date >= rec.dateRange.startDate && date < incEnd;
+            }
+            return true;
+        };
+        const del = new Set<string>();
         for (const ex of existing) {
             if (ex.recurring || !ex.specificDates?.length) continue;
             for (const date of ex.specificDates) {
-                if (!doesCommitmentApplyToDate(rec, date)) continue;
+                if (!wouldApply(date)) continue;
                 const occR = getOccurrenceOnDate(rec, date);
                 const occO = getOccurrenceOnDate(ex, date);
                 const overlap = occR.isAllDay || occO.isAllDay || timesOverlapLocal(occR.startTime, occR.endTime, occO.startTime, occO.endTime);
