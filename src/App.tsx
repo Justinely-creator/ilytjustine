@@ -2581,8 +2581,8 @@ function App() {
                 <nav className="sticky-nav backdrop-blur-xl bg-gradient-to-r from-white/90 via-blue-50/85 to-indigo-50/85 dark:from-gray-900/95 dark:via-blue-900/25 dark:to-indigo-900/25 shadow-2xl shadow-blue-500/8 dark:shadow-blue-900/15 border-b border-gradient-to-r from-blue-200/15 via-indigo-200/15 to-purple-200/15 dark:from-blue-800/15 dark:via-indigo-800/15 dark:to-purple-800/15">
                     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                         {/* Desktop Navigation */}
-                        <div className="hidden lg:flex items-center justify-center space-x-1 py-4">
-                            <div className="flex items-center bg-gradient-to-r from-blue-100/80 via-indigo-100/80 to-purple-100/80 dark:from-gray-800/80 dark:via-blue-900/40 dark:to-indigo-900/40 rounded-2xl p-1.5 shadow-inner border border-blue-200/50 dark:border-blue-800/50">
+                        <div className="hidden lg:flex items-center justify-start space-x-1 py-2">
+                            <div className="flex items-center bg-gradient-to-r from-blue-100/80 via-indigo-100/80 to-purple-100/80 dark:from-gray-800/80 dark:via-blue-900/40 dark:to-indigo-900/40 rounded-2xl p-1 shadow-inner border border-blue-200/50 dark:border-blue-800/50">
                                 {tabs.map((tab) => (
                                     <button
                                         key={tab.id}
