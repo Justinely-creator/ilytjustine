@@ -2530,7 +2530,7 @@ function App() {
                                     >
                                         <tab.icon size={18} className={activeTab === tab.id ? 'drop-shadow-sm' : 'group-hover:scale-110 transition-transform'} />
                                         {activeTab === tab.id && (
-                                            <span className="ml-2.5 hidden xl:inline drop-shadow-sm">{tab.label}</span>
+                                            <span className="ml-2.5 inline drop-shadow-sm">{tab.label}</span>
                                         )}
                                     </button>
                                 ))}
